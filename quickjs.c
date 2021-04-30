@@ -11980,6 +11980,17 @@ int JS_IsArray(JSContext *ctx, JSValueConst val)
     }
 }
 
+uint32_t JS_GetArrayLen(JSContext* ctx, JSValueConst val)
+{
+    JSObject *p;
+    if (likely(JS_VALUE_GET_TAG(val) == JS_TAG_OBJECT)) {
+        p = JS_VALUE_GET_OBJ(val);
+        return p->u.array.count;
+    } else {
+        return 0;
+    }
+}
+
 static double js_pow(double a, double b)
 {
     if (unlikely(!isfinite(b)) && fabs(a) == 1) {
